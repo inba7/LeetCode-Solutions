@@ -4,5 +4,8 @@ class Solution(object):
         words.reverse()
         string = str()
         for word in words:
-            string = string + word + " "
-        return string.strip()
+            if string == "":
+                string += word
+            else:
+                string = string + " " + word
+        return string
