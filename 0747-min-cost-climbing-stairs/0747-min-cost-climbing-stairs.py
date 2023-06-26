@@ -1,9 +1,8 @@
 class Solution(object):
     def minCostClimbingStairs(self, cost):
-        self.table = [-1]*(len(cost)+1)
-        self.table[0]=0
-        self.table[1]=cost[0]
-        for i in range(2,len(cost)+1):
-            self.table[i] = cost[i-1]+min(self.table[i-1],self.table[i-2])
-        print(self.table)
-        return min(self.table[len(cost)],self.table[len(cost)-1])
+        if len(cost) < 2: return min(cost)
+
+        for i in range(2, len(cost)):
+            cost[i] += min(cost[i-1], cost[i-2])
+
+        return min(cost[-1], cost[-2])
