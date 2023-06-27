@@ -1,11 +1,13 @@
 class Solution(object):
     def dailyTemperatures(self, temperatures):
-        stack = []
+        hottest = 0
         res = [0] * len(temperatures)
-        for i, t in enumerate(temperatures):
-            while stack and temperatures[stack[-1]] < t:
-                j = stack.pop()
-                res[j] = i - j
-            stack.append(i)
-
+        for i in reversed(range(len(temperatures))):
+            if temperatures[i] >= hottest:
+                hottest = temperatures[i]
+            else:
+                days = 1
+                while temperatures[days + i] <= temperatures[i]:
+                    days += res[days + i]                   
+                res[i] = days
         return res
