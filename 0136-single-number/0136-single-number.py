@@ -1,6 +1,6 @@
 class Solution(object):
     def singleNumber(self, nums):
-        Num = set(nums)
-        for i in Num:
-            if nums.count(i) == 1:
-                return i
+        ans=0
+        for i in range(len(nums)):
+            ans=ans^nums[i]
+        return ans
