@@ -1,8 +1,9 @@
 class Solution(object):
     def largestAltitude(self, gain):
-        maxHigh, high = 0, 0
-        for i in gain:
-            high += i
-            if high > maxHigh: 
-                maxHigh = high
-        return maxHigh
+        s = 0
+        res = 0
+        for h in gain:
+            s += h
+            res = max(res, s)
+
+        return res
