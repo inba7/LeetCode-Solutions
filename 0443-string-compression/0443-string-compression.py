@@ -1,18 +1,16 @@
 class Solution(object):
     def compress(self, chars):
-        length = len(chars)
-        if length < 2:
-            return length
-        anchor = 0
-        write = 0
-        for pos, char in enumerate(chars):
-            if (pos + 1) == length or char != chars[pos+1]:
-                chars[write] = char
-                write += 1
-                if pos > anchor:
-                    repeated_times = pos - anchor + 1
-                    for num in str(repeated_times):
-                        chars[write] = num
-                        write += 1
-                anchor = pos + 1
-        return write
+        ans, i = 0,0
+        while i < len(chars):
+            l = chars[i]
+            c = 0
+            while i < len(chars) and chars[i] == l:
+                c += 1
+                i += 1
+            chars[ans] = l
+            ans += 1
+            if c > 1:
+                for c in str(c):
+                    chars[ans] = c
+                    ans += 1          
+        return ans
