@@ -1,15 +1,17 @@
 class Solution(object):
-    def nextNumber(self, n):
-        newNumber = 0
-        while n != 0:
-            num = n % 10
-            newNumber += num * num
-            n = n / 10
-        return newNumber
-
     def isHappy(self, n):
-        s = set()
-        while n != 1 and n not in s:
-            s.add(n)
-            n = self.nextNumber(n)
-        return n == 1
+        total = 0
+        for digit in str(n):
+            total += int(digit)**2
+        
+        seen = set()
+        seen.add(total)
+        while total != 1:
+            new = 0
+            for char in str(total):
+                new += int(char)**2
+            total = new
+            if total in seen:
+                return False
+            seen.add(total)
+        return True
