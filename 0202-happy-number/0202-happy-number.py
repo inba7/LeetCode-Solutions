@@ -1,17 +1,18 @@
 class Solution(object):
     def isHappy(self, n):
-        total = 0
-        for digit in str(n):
-            total += int(digit)**2
-        
-        seen = set()
-        seen.add(total)
-        while total != 1:
-            new = 0
-            for char in str(total):
-                new += int(char)**2
-            total = new
-            if total in seen:
-                return False
-            seen.add(total)
-        return True
+        visit = set()
+        while n not in visit:
+            visit.add(n)
+            n= self.sumSquered(n)
+            if n == 1:
+                return True
+        return False
+    
+    def sumSquered(self, n):
+        output= 0
+        while n:
+            digit = n%10
+            digit = digit ** 2
+            output += digit
+            n = n//10
+        return output
