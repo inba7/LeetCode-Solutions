@@ -1,10 +1,5 @@
-WITH CTE AS (
-        SELECT T2.product_name, SUM(T1.unit) unit
-        FROM Orders T1
-        INNER JOIN Products T2 ON T1.product_id = T2.product_id
-        WHERE
-            order_date > '2020-01-31' AND 
-            order_date < '2020-03-01'
-        GROUP BY T2.product_name
-)
-SELECT * FROM CTE WHERE unit > 99
+SELECT product_name,unit FROM Products 
+JOIN (SELECT product_id,sum(unit) AS 'unit' FROM Orders
+WHERE month(order_date) = 2 AND year(order_date) = 2020
+GROUP BY product_id
+HAVING sum(unit) >=100)T ON Products.product_id = T.product_id
