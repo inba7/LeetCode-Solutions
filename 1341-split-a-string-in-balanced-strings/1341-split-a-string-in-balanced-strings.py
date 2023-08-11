@@ -1,12 +1,8 @@
 class Solution(object):
     def balancedStringSplit(self, s):
-        Count = 0
-        Left, Right = 0, 0
-        for i in range(len(s)):
-            if s[i] == 'R':
-                Right += 1
-            else:
-                Left += 1
-            if Right == Left:
+        Bal = Count = 0
+        for X in s:
+            Bal += 1 if X == "R" else -1
+            if Bal == 0:
                 Count += 1
         return Count
