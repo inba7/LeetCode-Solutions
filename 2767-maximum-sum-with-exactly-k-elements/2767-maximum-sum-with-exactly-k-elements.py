@@ -1,6 +1,4 @@
 class Solution(object):
     def maximizeSum(self, nums, k):
-        Max = max(nums)*k
-        for i in range(k):
-            Max+=i
+        Max = max(nums)*k + (k-1)*(k)/2
         return Max
