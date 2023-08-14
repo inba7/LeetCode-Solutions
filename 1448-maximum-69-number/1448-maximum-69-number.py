@@ -1,10 +1,13 @@
 class Solution(object):
     def maximum69Number (self, num):
-        Temp = num
-        N = len(str(num))-1
-        while num > 0:
-            if num//(10**N) != 9:
-                break
-            num%=10**N
-            N-=1
-        return Temp + 3*(10**N) if N > -1 else Temp
+        Num = str(num)
+        New = ''
+        N = len(Num)
+        Max = 0
+        for x in range(N):
+            if Num[x] == '6' and Max == 0:
+                New += '9'
+                Max = 1
+            else:
+                New += Num[x]
+        return int(New)
