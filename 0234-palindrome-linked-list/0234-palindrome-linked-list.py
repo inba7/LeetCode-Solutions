@@ -7,12 +7,14 @@ class Solution(object):
     def isPalindrome(self, head):
         Slow, Fast, Prev = head, head, None
         while Fast and Fast.next:
-            Slow, Fast = Slow.next, Fast.next.next
-        Prev, Slow, Prev.next = Slow, Slow.next, None
-        while Slow:
-            Slow.next, Prev, Slow = Prev, Slow, Slow.next
-        Fast, Slow = head, Prev
-        while Slow:
-            if Fast.val != Slow.val: return False
-            Fast, Slow = Fast.next, Slow.next
+            Fast, Next = Fast.next.next, Slow.next
+            Slow.next = Prev
+            Prev = Slow
+            Slow = Next
+        if Fast:
+            Slow = Slow.next
+        while Prev:
+            if Prev.val != Slow.val:
+                return False
+            Prev, Slow = Prev.next, Slow.next
         return True
