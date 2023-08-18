@@ -1,16 +1,18 @@
 class Solution(object):
-    def longestPalindrome(self, s):
-        def expand(left, right):
-            while (left >= 0 and right < len(s) and s[left] == s[right]):
-                left -= 1
-                right += 1
-            return s[left+1:right]
-        result = ""
-        for i in range(len(s)):
-            sub1 = expand(i,i)
-            if len(sub1) > len(result):
-                result = sub1
-            sub2 = expand(i,i+1)
-            if len(sub2) > len(result):
-                result = sub2
-        return result
+    def longestPalindrome(self, S):
+        if len(S)<=1 or S == S[::-1]:
+            return S
+        else:
+            Temp = 1
+            Start = 0
+            for X in range(1,len(S)):
+                Odd = S[X-Temp-1:X+1]
+                Even = S[X-Temp:X+1]
+                if X-Temp-1>=0 and Odd == Odd[::-1]:
+                    Start = X-Temp-1
+                    Temp+=2
+                    continue
+                if Even==Even[::-1]:
+                    Start = X-Temp
+                    Temp+=1
+        return S[Start:Start+Temp]
