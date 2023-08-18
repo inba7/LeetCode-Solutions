@@ -2,8 +2,8 @@ class Solution(object):
     def findMedianSortedArrays(self, nums1, nums2):
         nums1.extend(nums2)
         nums1.sort()
-        mid = len(nums1)//2
-        if len(nums1)%2 == 0:
-            return (nums1[mid]+nums1[mid-1])*0.5
+        l = len(nums1)
+        if l%2:
+          return nums1[(l-1)/2]
         else:
-            return float(nums1[mid])
+          return 0.5*(nums1[(l/2)-1]+ nums1[l/2])
