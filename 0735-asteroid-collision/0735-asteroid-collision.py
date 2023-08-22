@@ -1,14 +1,16 @@
 class Solution(object):
     def asteroidCollision(self, asteroids):
-        ans = []
-        for new in asteroids:
-            while ans and new < 0 < ans[-1]:
-                if ans[-1] < -new:
-                    ans.pop()
-                    continue
-                elif ans[-1] == -new:
-                    ans.pop()
-                break
+        Stack = []
+        for asteroid in asteroids:
+            while Stack and asteroid < 0 and Stack[-1] > 0:
+                if abs(asteroid) > Stack[-1]:
+                    Stack.pop()
+                elif abs(asteroid) == Stack[-1]:
+                    Stack.pop()
+                    break
+                else:
+                    break
             else:
-                ans.append(new)
-        return ans
+                Stack.append(asteroid)
+
+        return Stack
