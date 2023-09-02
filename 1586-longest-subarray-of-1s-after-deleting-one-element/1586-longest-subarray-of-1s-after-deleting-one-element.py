@@ -1,13 +1,13 @@
 class Solution(object):
     def longestSubarray(self, nums):
-        Prev, Curr, Ans = 0, 0, 0
-        for i in nums:
-            if i == 1:
-                Curr += 1
+        oneRuns = []
+        cur=0
+        for n in nums+[0]:
+            if n==0:
+                oneRuns+=[cur]
+                cur=0
             else:
-                Ans = max(Ans, Curr + Prev)
-                Prev = Curr
-                Curr = 0
-        Ans = max(Ans, Curr + Prev)
+                cur+=1
 
-        return Ans-1 if Ans == len(nums) else Ans        
+        if len(oneRuns)==1: return max(oneRuns[0]-1,0)        
+        else: return max([oneRuns[i]+oneRuns[i+1] for i in range(len(oneRuns)-1)])    
