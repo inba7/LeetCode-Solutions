@@ -1,21 +1,29 @@
+class TrieNode(object):
+    def __init__(self):
+        self.children = {}
+        self.is_word = False
 class Solution(object):
     def minExtraChar(self, s, dictionary):
-        cache = {}
-        def dfs(text):
-            if len(text) <= 0:
-                return 0
-            if len(text) in cache:
-                return cache[len(text)]
-            minimum = len(text)
-            for word in dictionary:
-                if text == word:
-                    minimum = 0
-                    cache[len(text)] = minimum
-                    return minimum
-                elif text[:len(word)] == word:
-                    result = dfs(text[len(word):])
-                    minimum = min(minimum, result)
-            minimum = min(minimum, 1 + dfs(text[1:]))
-            cache[len(text)] = minimum
-            return minimum
-        return dfs(s)
+        trie = self.buildTrie(dictionary)
+        words = set(dictionary)
+        dp = [0] * (len(s) + 1)
+        for start in range(len(s) - 1, -1, -1):
+            dp[start] = 1 + dp[start+1]
+            current = trie
+            for end in range(start, len(s)):
+                if s[end] not in current.children:
+                    break
+                current = current.children[s[end]]
+                if current.is_word:
+                    dp[start] = min(dp[start], dp[end + 1])
+        return dp[0]
+    def buildTrie(self, dictionary):
+        root = TrieNode()
+        for word in dictionary:
+            current = root
+            for char in word:
+                if char not in current.children:
+                    current.children[char] = TrieNode()
+                current = current.children[char]
+            current.is_word = True
+        return root
