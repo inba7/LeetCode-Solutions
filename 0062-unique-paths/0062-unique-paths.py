@@ -1,12 +1,9 @@
 class Solution(object):
     def uniquePaths(self, m, n):
-        dp = [[-1] * n for _ in range(m)]
-        def solve(i, j):
-            if i == m - 1 or j == n - 1:
-                return 1
-            if dp[i][j] != -1:
-                return dp[i][j]
-            dp[i][j] = solve(i + 1, j) + solve(i, j + 1)
-            return dp[i][j]
-
-        return solve(0, 0)
+        row = [1] * n
+        for i in range(m - 1):
+            newRow = [1] * n
+            for j in range(n - 2, -1, -1):
+                newRow[j] = newRow[j + 1] + row[j]
+            row = newRow
+        return row[0]
