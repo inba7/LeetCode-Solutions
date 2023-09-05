@@ -1,17 +1,17 @@
 class Solution(object):
     def copyRandomList(self, head):
-        if not head:
-            return None
-        node_map = {}
-        current = head
-        while current:
-            node_map[current] = Node(current.val)
-            current = current.next
-        current = head
-        while current:
-            copy_node = node_map[current]
-            copy_node.next = node_map.get(current.next)
-            copy_node.random = node_map.get(current.random)
-            current = current.next
-        return node_map[head]
+        Dict = {None:None}
+        Curr = head
+        while Curr:
+            Dict[Curr] = Node(Curr.val)
+            Curr = Curr.next
+        Curr = head
+        while Curr:
+            Copy = Dict[Curr]
+            Copy.next = Dict[Curr.next]
+            Copy.random = Dict[Curr.random]
+            Curr = Curr.next
+        return Dict[head]
         
+        
+        return head
