@@ -1,20 +1,23 @@
 class Solution(object):
     def splitListToParts(self, head, k):
         length = 0
-        temp = head
-        while temp:
+        node = head
+        while node:
             length += 1
-            temp = temp.next
-        part_size = length // k
-        extra = length % k
+            node = node.next
+        div, mod = divmod(length, k)
         result = []
-        temp = head
-        for i in range(k):
-            result.append(temp)
-            current_part_size = part_size + 1 if extra > 0 else part_size
-            extra -= 1
-            for j in range(current_part_size - 1):
-                temp = temp.next
-            if temp:
-                temp.next, temp = None, temp.next
+        node = head
+        for _ in range(k):
+            result.append(node)
+            if not node:
+                continue
+            part_size = div + 1 if mod > 0 else div
+            mod -= 1
+            for _ in range(part_size - 1):
+                node = node.next
+            next_node = node.next
+            node.next = None
+            node = next_node
+        
         return result
