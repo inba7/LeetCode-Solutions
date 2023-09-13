@@ -1,13 +1,21 @@
 class Solution(object):
     def candy(self, Ratings):
-        Kids, Candy = len(Ratings), [1]*len(Ratings)
-
-        for i in range(Kids-1):
-            if Ratings[i] < Ratings[i+1]:
-                Candy[i+1] = max(1 + Candy[i], Candy[i+1])
-                
-        for i in range(Kids-2, -1, -1):
-            if Ratings[i+1] < Ratings[i]:
-                Candy[i] = max(1 + Candy[i+1], Candy[i])
+        Up, Down = 1, 0
+        Candy, Peak = 1, 0
         
-        return sum(Candy)
+        for i in range(1, len(Ratings)):
+            if Ratings[i] > Ratings[i-1]:
+                Up += 1
+                Down =  0
+                Candy += Up
+                Peak = Up 
+            elif Ratings[i] == Ratings[i-1]:
+                Up, Down, Peak = 1, 0, 0
+                Candy += 1  
+            else:
+                Down += 1
+                Up = 1
+                Candy += Down
+                if Peak <= Down:
+                    Candy += 1
+        return Candy
