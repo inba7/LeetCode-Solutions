@@ -1,3 +1,6 @@
 class Solution(object):
     def isAcronym(self, words, s):
-        return "".join(w[0] for w in words) == s
+        acronym = ""
+        for word in words:
+            acronym += word[0]
+        return s == acronym
