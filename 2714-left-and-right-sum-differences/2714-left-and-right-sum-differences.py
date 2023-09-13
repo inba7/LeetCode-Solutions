@@ -1,8 +1,7 @@
 class Solution(object):
     def leftRightDifference(self, nums):
-        n = len(nums)
-        if len(nums) < 2:
-            return [0] * n
+        if len(nums)< 2:
+            return [0]
         total_sum = sum(nums)
         left_sum = 0
         output = []
