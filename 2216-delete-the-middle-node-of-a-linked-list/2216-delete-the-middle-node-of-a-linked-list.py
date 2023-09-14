@@ -3,13 +3,8 @@ class Solution(object):
         if not head.next:
             return None
         Prev, SP, FP = None, head, head
-        while True:
-            if FP.next and FP.next.next:
-                Prev, SP, FP = SP, SP.next, FP.next.next
-                continue
-            if FP.next:
-                SP.next = SP.next.next
-            else:
-                Prev.next = SP.next
-            break
+        while FP and FP.next:
+            Prev = SP
+            SP, FP = SP.next, FP.next.next
+        Prev.next = SP.next
         return head
