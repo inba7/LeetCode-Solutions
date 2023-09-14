@@ -1,16 +1,16 @@
 class Solution(object):
     def decodeString(self, s):
-        stack = []
-        for i in range(len(s)):
-            if s[i] != "]":
-                stack.append(s[i])
+        Output = []
+        for n in range(len(s)):
+            if s[n] != "]":
+                Output.append(s[n])
             else:
-                substr = ""
-                while stack[-1] != "[":
-                    substr = stack.pop() + substr
-                stack.pop()
-                k = ""
-                while stack and stack[-1].isdigit():
-                    k = stack.pop() + k
-                stack.append(int(k) * substr)
-        return "".join(stack)
+                SubStr = ""
+                while Output[-1] != "[":
+                    SubStr = Output.pop() + SubStr
+                Output.pop()
+                Freq = ""
+                while Output and Output[-1].isdigit():
+                    Freq = Output.pop() + Freq
+                Output.append(int(Freq) * SubStr)
+        return "".join(Output)
