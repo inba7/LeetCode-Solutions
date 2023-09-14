@@ -1,24 +1,25 @@
 class Solution(object):
     def oddEvenList(self, head):
-        if head==None or head.next == None or head.next.next == None:
+        if not head or not head.next:
             return head
-        odd=ListNode(head.val)
-        even=ListNode(head.next.val)
-        oddPtr = odd
-        evenPtr = even
-        ptr = head.next.next
-        count=2
-        while ptr!= None:
-            count+=1
-            if count%2 == 0:
-                n = ListNode(ptr.val)
-                evenPtr.next=n
-                evenPtr=evenPtr.next
+
+        odd_head, even_head = head, head.next
+        odd_ptr, even_ptr = odd_head, even_head
+        current = even_head.next
+        is_odd = True
+
+        while current:
+            if is_odd:
+                odd_ptr.next = current
+                odd_ptr = odd_ptr.next
             else:
-                n = ListNode(ptr.val)
-                oddPtr.next=n
-                oddPtr=oddPtr.next
-            if ptr.next == None:
-                oddPtr.next=even
-            ptr=ptr.next
-        return odd
+                even_ptr.next = current
+                even_ptr = even_ptr.next
+            current = current.next
+            is_odd = not is_odd
+
+        odd_ptr.next = None
+        even_ptr.next = None
+        odd_ptr.next = even_head
+
+        return odd_head
