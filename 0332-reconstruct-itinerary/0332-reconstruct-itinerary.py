@@ -1,17 +1,15 @@
-import collections
-import heapq
-
 class Solution(object):
     def findItinerary(self, tickets):
-        ans = []
         graph = collections.defaultdict(list)
-        for a, b in tickets:
-            graph[a].append(b)
-        for u in graph:
-            heapq.heapify(graph[u])
-        def dfs(u):
-            while u in graph and graph[u]:
-                dfs(heapq.heappop(graph[u]))
-            ans.append(u)
-        dfs('JFK')
-        return ans[::-1]
+        for from_loc, to_loc in tickets:
+            graph[from_loc].append(to_loc)
+        for from_loc in graph:
+            graph[from_loc].sort(reverse=True)
+        self.ans = []
+        self.dfs(graph, "JFK")
+        return self.ans[::-1]
+    
+    def dfs(self, graph, root):
+        while graph[root]:
+            self.dfs(graph, graph[root].pop())
+        self.ans.append(root)
