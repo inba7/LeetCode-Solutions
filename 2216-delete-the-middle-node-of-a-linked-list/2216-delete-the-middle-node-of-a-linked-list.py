@@ -2,7 +2,8 @@ class Solution(object):
     def deleteMiddle(self, head):
         if not head.next:
             return None
-        Prev, SP, FP = None, head, head
+        SP = FP = head
+        Prev = None
         while FP and FP.next:
             Prev = SP
             SP, FP = SP.next, FP.next.next
