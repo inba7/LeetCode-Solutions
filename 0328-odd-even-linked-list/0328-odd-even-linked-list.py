@@ -6,7 +6,6 @@ class Solution(object):
             even_head = even
         else:
             return
-
         while even and even.next:
             odd.next = even.next
             odd = odd.next
