@@ -1,19 +1,20 @@
 class Solution(object):
     def minimumEffortPath(self, heights):
-        m = len(heights)
-        n = len(heights[0])
-        vis = [[False for i in range(n)] for j in range(m)]
-        q = []
-        heapq.heappush(q, (0,0,0))
-        while len(q) > 0:
-            cur = heapq.heappop(q)
-            if vis[cur[1]][cur[2]]:
+        m,n = len(heights), len(heights[0])
+        visited = [[False for j in range(n)] for i in range(m)] 
+        directions = [(1, 0), (-1,0), (0,1), (0,-1)]
+        h = [(0, 0, 0)]
+        heapify(h)
+        while len(h) > 0:
+            height, row, col = heappop(h)
+            if visited[row][col]:
                 continue
-            if cur[1] == m-1 and cur[2] == n-1:
-                return cur[0]
-            vis[cur[1]][cur[2]] = True
-            for _x, _y in [(-1,0),(1,0),(0,-1),(0,1)]:
-                x, y = cur[1]+_x, cur[2]+_y
-                if 0<=x<m and 0<=y<n and not vis[x][y]:
-                    heapq.heappush(q, (max(cur[0], abs(heights[x][y]-heights[cur[1]][cur[2]])), x, y))
-        return -1
+            if row == m-1 and col == n-1:
+                return height
+            visited[row][col] = True
+            for dx, dy in directions:
+                x, y = row+dx, col+dy
+                if 0 <= x < m and 0 <= y < n and not visited[x][y]:
+                    diff = max(height, abs(heights[row][col]-heights[x][y]))
+                    heappush(h, (diff, x, y))
+        return -1 
