@@ -1,33 +1,22 @@
-from collections import deque
-
 class Solution:
     def shortestPathLength(self, graph):
-        V = len(graph)
-        curr_level = deque([(u, 1 << u) for u in range(V)])
-        all_visited = (1 << V) - 1
+        n = len(graph)
+        target_mask = (1 << n) - 1
         
-        visited = [[False for bit_mask in range(0, all_visited + 1)] 
-        for _ in range(V)]
-
-        for u in range(V):
-            visited[u][1 << u] = True
-        path_length = 0
+        memo = [[float('inf')] * (1 << n) for _ in range(n)]
+        queue = deque()
         
-        while curr_level:
-            n = len(curr_level)
-            while n:
-                u, bit_mask = curr_level.popleft()
-                if bit_mask == all_visited:
-                    return path_length 
-                for v in graph[u]:
-                    next_bit_mask = bit_mask | (1 << v)
-                    if visited[v][next_bit_mask]:
-                        continue 
-                    if next_bit_mask == all_visited: 
-                        return path_length + 1
-                    curr_level.append((v, next_bit_mask))
-                    visited[v][next_bit_mask] = True
-                n -= 1
-            path_length += 1
-            
+        for i in range(n):
+            queue.append((i, 1 << i, 0))
+            memo[i][1 << i] = 0
+        
+        while queue:
+            node, mask, dist = queue.popleft()
+            if mask == target_mask:
+                return dist
+            for neighbor in graph[node]:
+                new_mask = mask | (1 << neighbor)
+                if dist + 1 < memo[neighbor][new_mask]:
+                    memo[neighbor][new_mask] = dist + 1
+                    queue.append((neighbor, new_mask, dist + 1))
         return -1
