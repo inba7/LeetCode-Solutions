@@ -1,4 +1,15 @@
 class Solution(object):
     def isPalindrome(self, s):
-        s = [c.lower() for c in s if c.isalnum()]
-        return all (s[i] == s[~i] for i in range(len(s)//2))
+        s = re.sub(r'[^a-zA-Z0-9]','',s)
+        s = s.lower()
+        start = 0 
+        end = len(s)-1
+
+        while start < end:
+            if s[start] != s[end]:
+                return False
+
+            start = start + 1
+            end = end -1
+            
+        return True
