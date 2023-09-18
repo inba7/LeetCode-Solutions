@@ -1,6 +1,6 @@
 class Solution(object):
     def kWeakestRows(self, mat, k):
-        m = range(len(mat))
-        rows = sorted(m, key=lambda i: mat[i])
-        del rows[k:]
-        return rows
+        M = range(len(mat))
+        Rows = sorted(M, key=lambda i: mat[i])
+        del Rows[k:]
+        return Rows
