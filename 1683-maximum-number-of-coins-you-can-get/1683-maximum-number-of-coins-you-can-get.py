@@ -1,8 +1,8 @@
 class Solution(object):
     def maxCoins(self, piles):
-        piles.sort()
-        Sum = 0
-        N = len(piles)
-        for n in range(N-1, int(N/3), -2):
-            Sum += piles[n-1]
-        return Sum
+        Length = int(2*len(piles)/3)
+        piles = sorted(piles)[::-1]
+        total = 0
+        for i in range(1, Length, 2):
+            total += piles[i]
+        return total 
