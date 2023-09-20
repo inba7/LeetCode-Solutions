@@ -1,18 +1,15 @@
 class Solution(object):
     def minOperations(self, nums, x):
-        total = sum(nums)
-        target = total - x
-        left = 0
-        n = len(nums)
-        max_length = -1
-        running_sum = 0
+        Total, N = sum(nums), len(nums)
+        Left, Sum, Max = 0, 0, -1
+        Target = Total - x
 
-        for right in range(n):
-            running_sum += nums[right]
-            while running_sum > target and left <= right:
-                running_sum -= nums[left]
-                left += 1
-            if running_sum == target:
-                max_length = max(max_length, right - left + 1)
+        for Right in range(N):
+            Sum += nums[Right]
+            while Sum > Target and Left <= Right:
+                Sum -= nums[Left]
+                Left += 1
+            if Sum == Target:
+                Max = max(Max, Right - Left + 1)
         
-        return n - max_length if max_length != -1 else -1
+        return N - Max if Max != -1 else -1
