@@ -8,5 +8,4 @@ class Solution(object):
                 counter+=1
             if(counter == len(s)):
                 return True
-
         return False
