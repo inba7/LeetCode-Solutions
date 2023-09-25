@@ -1,11 +1,15 @@
 class Solution(object):
     def minFlips(self, a, b, c):
-        ab, equal, ans = a | b, (a | b) ^ c, 0
-        for i in range(31):
-            mask = 1 << i
-            if equal & mask > 0:
-                if (a & mask) == (b & mask) and (c & mask) == 0:
-                    ans += 2 
-                else:
-                    ans += 1
-        return ans
+        Count = 0
+        while a or b or c:
+            A = a & 1
+            B = b & 1
+            C = c & 1
+            if C == 0:
+                Count += A + B
+            else:
+                Count += (A | B) ^ 1
+            a >>= 1
+            b >>= 1
+            c >>= 1
+        return Count
