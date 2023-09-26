@@ -1,8 +1,6 @@
 class Solution(object):
     def smallestSubsequence(self, s):
-        Last = {}
-        for x in range(len(s)):
-            Last[s[x]] = x
+        Last = {Val:Idx for Idx, Val in enumerate(s)}
 
         Stack, Visited = [], set()
         for x in range(len(s)):
