@@ -6,10 +6,10 @@ class Solution(object):
 
         Stack, Seen = [], set()
         for x in range(N):
-            if s[x] in Seen: continue
-            while Stack and Stack[-1] > s[x] and Check[Stack[-1]] > x:
-                Seen.remove(Stack[-1])
-                Stack.pop()
-            Seen.add(s[x])
-            Stack.append(s[x])
+            if s[x] not in Seen:
+                while Stack and Stack[-1] > s[x] and Check[Stack[-1]] > x:
+                    Seen.remove(Stack.pop())
+                Stack.append(s[x])
+                Seen.add(s[x])
+
         return "".join(Stack)
