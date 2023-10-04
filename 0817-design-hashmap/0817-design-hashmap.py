@@ -1,12 +1,15 @@
 class MyHashMap(object):
     def __init__(self):
-        self.ans = [-1] * 1000001
-
+        self.hashMap = {}
+        
     def put(self, key, value):
-        self.ans[key] = value
+        self.hashMap[key] = value        
 
     def get(self, key):
-        return self.ans[key]
+        if key in self.hashMap:
+            return self.hashMap.get(key)
+        return -1        
 
     def remove(self, key):
-        self.ans[key] = -1
+        if key in self.hashMap:
+            self.hashMap.pop(key)
