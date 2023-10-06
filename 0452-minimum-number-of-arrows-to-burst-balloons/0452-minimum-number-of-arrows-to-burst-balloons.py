@@ -1,14 +1,10 @@
 class Solution(object):
     def findMinArrowShots(self, points):
-        points.sort()
-        Arrows = 1
-        PrevEnd = points[0][1]
-
-        if len(points) > 1:
-            for Start, End in points[1:]:
-                if PrevEnd >= Start:
-                    PrevEnd = min(PrevEnd, End)
-                else:
-                    Arrows += 1
-                    PrevEnd = End
+        points = sorted(points, key = lambda x : x[1])
+        PrevEnd = float('-inf')
+        Arrows = 0
+        for Start, End in points:
+            if Start > PrevEnd:
+                PrevEnd = End
+                Arrows += 1
         return Arrows
