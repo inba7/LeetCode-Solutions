@@ -1,21 +1,15 @@
 class Solution(object):
     def maxDotProduct(self, nums1, nums2):
-        n, m = len(nums1), len(nums2)
-        memo = [[float('-inf')] * m for _ in range(n)]
+        if max(nums1) < 0 and min(nums2) > 0:
+            return max(nums1) * min(nums2)
         
-        def dp(i, j):
-            if i == n or j == m:
-                return float('-inf')
-            
-            if memo[i][j] != float('-inf'):
-                return memo[i][j]
-            
-            memo[i][j] = max(
-                nums1[i] * nums2[j] + max(dp(i + 1, j + 1), 0),
-                dp(i + 1, j),  
-                dp(i, j + 1), 
-            )
-            
-            return memo[i][j]
+        if min(nums1) > 0 and max(nums2) < 0:
+            return min(nums1) * max(nums2)
         
-        return dp(0, 0)
+        DP = [[0] * (len(nums2) + 1) for _ in range(len(nums1) + 1)]
+        for i in range(len(nums1) - 1, -1, -1):
+            for j in range(len(nums2) - 1, -1, -1):
+                Use = nums1[i] * nums2[j] + DP[i + 1][j + 1]
+                DP[i][j] = max(Use, DP[i + 1][j], DP[i][j + 1])
+        
+        return DP[0][0]
