@@ -1,18 +1,23 @@
 class Solution(object):
     def longestCommonSubsequence(self, text1, text2):
-        l1 = len(text1)
-        l2 = len(text2)
+        maxSeq = 0
+        starts = [-1]
+        for i in range(len(text2)):
+            end = len(text1) - 1
+            k = len(starts) - 1
+            while k >= 0:
+                j = starts[k] + 1
+                while j < end:
+                    if text1[j] == text2[i]:
+                        break
+                    j += 1
 
-        prev = [0 for j in range(l2+1)] 
+                if j < len(text1) and text1[j] == text2[i]:
+                    if k == len(starts) - 1:
+                        starts.append(j)
+                    else:
+                        starts[k + 1] = j
+                end = starts[k]
+                k -= 1
 
-        for i in range(1,l1+1):
-            curr = [0 for x in range(l2+1)] 
-            for j in range(1,l2+1):
-                if text1[i-1] == text2[j-1]:
-                    curr[j] = prev[j-1] + 1
-                else:
-                    curr[j] = max(curr[j-1], prev[j])
-                
-            prev = curr
-
-        return curr[l2]
+        return len(starts) - 1
