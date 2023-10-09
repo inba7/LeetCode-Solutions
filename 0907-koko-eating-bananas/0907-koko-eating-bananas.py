@@ -1,21 +1,28 @@
 class Solution(object):
     def minEatingSpeed(self, piles, h):
-        left = 1
-        right = max(piles)
-        
-        while left < right:
-            mid = (left + right) / 2
-            if self.canEatAll(piles, mid, h):
-                right = mid
+        if h==len(piles):
+            return max(piles)
+     
+        s=sum(piles)
+        mini=s/h+1 if s%h>0 else s/h
+        maxi=s/(h-len(piles)+1)+1
+ 
+        return self.binary_search(mini,maxi, h, piles)
+
+    def binary_search(self, mini,maxi, h, piles):
+        while mini!=maxi:
+            mid=(mini+maxi)/2
+            if self.can_finish(piles,mid)<=h:
+                maxi=mid
             else:
-                left = mid + 1
-        
-        return left
-    
-    def canEatAll(self, piles, speed, h):
-        time = 0
+                mini=mid+1
+
+        return mini
+
+    def can_finish(self,piles,k):
+        r=0
         for pile in piles:
-            time += (pile - 1) / speed + 1
-            if time > h:
-                return False
-        return True
+            r+=pile/k
+            if pile%k>0:
+                r+=1
+        return r
