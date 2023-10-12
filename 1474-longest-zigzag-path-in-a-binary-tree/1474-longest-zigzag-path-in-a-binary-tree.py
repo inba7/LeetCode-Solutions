@@ -4,10 +4,8 @@ class Solution(object):
 
         def DFS(node, Left, Right):
             self.Max = max(self.Max, Left, Right)
-
             if node.left:
                 DFS(node.left, Right + 1, 0)
-
             if node.right:
                 DFS(node.right, 0, Left + 1)
 
