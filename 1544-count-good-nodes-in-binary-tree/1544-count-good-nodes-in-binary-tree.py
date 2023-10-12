@@ -1,18 +1,16 @@
 class Solution(object):
+    Res = 0
     def goodNodes(self, root):
-        if not root:
-            return 0
-        
-        def dfs(node, currMax):
-            if not node:
-                return
-            if node.val >= currMax:
-                Count[0] += 1
-                currMax = node.val
-            dfs(node.left, currMax)
-            dfs(node.right, currMax)
-        
-        Count = [0]
-        dfs(root, root.val)
-        
-        return Count[0]
+        def DFS(node, CurrMax):
+            if node.val >= CurrMax:
+                CurrMax = node.val
+                self.Res+=1
+            if node.left:
+                DFS(node.left, CurrMax)
+            if node.right:
+                DFS(node.right, CurrMax)
+            return
+
+        DFS(root,root.val)
+
+        return self.Res
