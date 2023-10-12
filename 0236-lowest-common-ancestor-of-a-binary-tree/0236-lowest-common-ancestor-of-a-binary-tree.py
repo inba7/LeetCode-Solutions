@@ -5,7 +5,6 @@ class Solution(object):
 
         Left = self.lowestCommonAncestor(root.left, p, q)
         Right = self.lowestCommonAncestor(root.right, p, q)
-
         if Left and Right: 
             return root
         elif Left: 
