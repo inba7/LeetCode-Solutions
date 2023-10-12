@@ -1,6 +1,14 @@
 class Solution(object):
     def lowestCommonAncestor(self, root, p, q):
-        if root in (None, p, q): return root
-        subs = [self.lowestCommonAncestor(kid, p, q) 
-                for kid in (root.left, root.right)]
-        return root if all(subs) else max(subs)
+        if not root or p == root or q == root:
+            return root
+
+        Left = self.lowestCommonAncestor(root.left, p, q)
+        Right = self.lowestCommonAncestor(root.right, p, q)
+
+        if Left and Right: 
+            return root
+        elif Left: 
+            return Left
+        else: 
+            return Right
