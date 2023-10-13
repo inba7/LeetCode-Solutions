@@ -1,11 +1,16 @@
 class Solution(object):
-    def helper(self,root,level):
-        if root:
-            self.level[level] += root.val
-            self.helper(root.left, level + 1)
-            self.helper(root.right, level + 1)
-
     def maxLevelSum(self, root):
-        self.level = defaultdict(int)
-        self.helper(root, 1)
-        return sorted(self.level.items(), key = lambda x: x[1], reverse = True)[0][0]
+        min_level, max_sum = 1, -float('inf')
+        q, level = [root], 1
+        while q:
+            tmp, sum_ = [], 0
+            for node in q:
+                sum_ += node.val
+                if node.left:
+                    tmp.append(node.left)
+                if node.right:
+                    tmp.append(node.right)
+            if sum_ > max_sum:
+                min_level, max_sum = level, sum_
+            q, level = tmp, level+1
+        return min_level
