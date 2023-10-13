@@ -1,16 +1,18 @@
 class Solution(object):
 	def rightSideView(self, root):
-		q = [root]
-		res = []
-		while q:
-			numNodes = len(q)
-			for i in range(numNodes):
-				removeNode = q.pop(0)
-				if removeNode:
-					if removeNode.left:
-						q.append(removeNode.left)
-					if removeNode.right:
-						q.append(removeNode.right)
-					if i == numNodes - 1:
-						res.append(removeNode.val)
-		return res
+		if not root: return []
+		RView = []
+		def BFS(root):
+			Queue = collections.deque([root])
+			while (Queue):
+				Size = len(Queue)
+				for i in range(Size):
+					Curr = Queue.popleft()
+					if Curr.left:
+						Queue.append(Curr.left)
+					if Curr.right:
+						Queue.append(Curr.right)
+					if i == Size - 1:
+						RView.append(Curr.val)
+		BFS(root)
+		return RView
