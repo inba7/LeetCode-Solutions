@@ -1,45 +1,29 @@
 class Solution(object):
     def nearestExit(self, maze, entrance):
-        seen = set()
-        exits = set()
-        R, C = len(maze), len(maze[0])
-        entrance = tuple(entrance)
+        rows, cols = len(maze), len(maze[0])
+        dirs = ((1, 0), (-1, 0), (0, 1), (0, -1))
         
-        for r in range(R):
-            if maze[r][0] == ".":
-                exits.add((r, 0))
-            if maze[r][C-1] == ".":
-                exits.add((r, C-1))
+        start_row, start_col = entrance
         
-        for c in range(C):
-            if maze[0][c] == ".":
-                exits.add((0, c))
-            if maze[R-1][c] == ".":
-                exits.add((R-1, c))
+        queue = collections.deque()
+        queue.append([start_row, start_col, 0])
         
-        if entrance in exits:
-            exits.remove(entrance)
-        
-        q = [(entrance, 0)] 
-        
-        while q:
-            curr_pos , d = q.pop(0)
+        while queue:
+            curr_row, curr_col, curr_distance = queue.popleft()
+            if 0 == curr_row or curr_row == rows - 1 or 0 == curr_col or curr_col == cols - 1:
+                if curr_row == start_row and curr_col == start_col:
+                    pass
+                else:
+                    return curr_distance
+
+            for d in dirs:
+                next_row = curr_row + d[0]
+                next_col = curr_col + d[1]
+
+                if 0 <= next_row < rows and 0 <= next_col < cols \
+                    and maze[next_row][next_col] == ".":
+
+                    maze[next_row][next_col] = "+"
+                    queue.append([next_row, next_col, curr_distance + 1])
             
-            if curr_pos in exits:
-                return d
-            
-            if curr_pos in seen:
-                continue
-            
-            seen.add(curr_pos)
-            
-            
-            for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                nx = dx + curr_pos[0]
-                ny = dy + curr_pos[1]
-                
-                if 0 <= nx < R and 0 <= ny < C and maze[nx][ny] == ".":
-                    q.append(((nx, ny), d + 1))
-            
-        
         return -1
