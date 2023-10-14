@@ -1,34 +1,26 @@
 class Solution(object):
     def calcEquation(self, equations, values, queries):
-        graph=defaultdict(dict)
-        n=len(equations)
-        for i in range(n):
-            graph[equations[i][0]][equations[i][1]]=values[i]
-            graph[equations[i][1]][equations[i][0]]=1/values[i]
+        graph = defaultdict(dict)
 
-        def dfs(x,y,visited):
-            if x not in graph or y not in graph:
-                return -1
+        for (x,y), val in zip(equations, values):
+            graph[x][y] = val
+            graph[y][x] = 1.0/val
 
-            if y in graph[x]:
-                return graph[x][y]
-
-            for i in graph[x]:
-                if i not in visited:
-                    visited.add(i)
-                    temp=dfs(i,y,visited)
-
-                    if temp==-1:
-                        continue
-
-                    else:
-                        return temp*graph[x][i]
-
-            return -1
-
-
-        ans=[]
-        for p,q in queries:
-            ans.append(dfs(p,q,set()))
-
-        return ans 
+        def dfs(src, target, visited):
+            if src not in graph or target not in graph:
+                return -1.0
+            if src == target:
+                return 1.0
+            visited.add(src)
+            for neighbor, val in graph[src].items():
+                if neighbor in visited:
+                    continue
+                ret_val = dfs(neighbor,target, visited)
+                if ret_val != -1.0:
+                    return val * ret_val
+            return -1.0
+        
+        result = []
+        for c,d in queries:
+            result.append(dfs(c,d,set()))
+        return result
