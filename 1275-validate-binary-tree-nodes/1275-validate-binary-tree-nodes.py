@@ -1,23 +1,22 @@
 class Solution(object):
     def validateBinaryTreeNodes(self, n, leftChild, rightChild):
-        Parents = {}
-        for Parent, Child in enumerate(zip(leftChild,rightChild)):
-            for C in Child:
-                if C == -1:
-                    continue 
-                if C in Parents:
-                    return False 
-                if Parent in Parents and Parents[Parent] == C:
-                    return False 
-                Parents[C]=Parent
+        Children = set(leftChild + rightChild)
+        Root = 0
+        for Node in range(n):
+            if Node not in Children:
+                Root = Node
         
-        def Count(root):
-            if root ==-1:
-                return 0
-            return 1 + Count(leftChild[root]) + Count(rightChild[root])
+        Visited = set()
+        Stack = [Root]
+        while Stack:
+            Root = Stack.pop()
+            if Root in Visited:
+                return False
+                
+            Visited.add(Root)
+            if rightChild[Root] != -1:
+                Stack.append(rightChild[Root])
+            if leftChild[Root] != -1:
+                Stack.append(leftChild[Root])
         
-        root = set(range(n)) - set(Parents.keys())
-        if  len(root)!=1:
-            return False 
-        
-        return Count(root.pop()) == n
+        return len(Visited) == n
