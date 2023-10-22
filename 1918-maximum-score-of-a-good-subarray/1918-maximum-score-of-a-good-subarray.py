@@ -1,20 +1,12 @@
 class Solution(object):
     def maximumScore(self, nums, k):
-        Res = Mini = nums[k]
-        i = j = k
-        N = len(nums)
-
-        while i > 0 or j < N - 1:
-            if i == 0:
-                j += 1
-            elif j == N - 1:
-                i -= 1
-            elif nums[i - 1] < nums[j + 1]:
-                j += 1
-            else:
-                i -= 1
-
-            Mini = min(Mini, min(nums[i], nums[j]))
-            Res = max(Res, Mini * (j - i + 1))
-
+        N, MinVal = len(nums), nums[k]
+        Left = Right = k
+        Res = 0
+        
+        while Left >= 0 or Right < N:
+            while Left >= 0 and nums[Left] >= MinVal: Left -= 1
+            while Right < N and nums[Right] >= MinVal: Right += 1
+            Res = max(Res, MinVal*(Right-Left-1))
+            MinVal = max(nums[Left] if Left >= 0 else -float('inf'), nums[Right] if Right < N else -float('inf'))
         return Res
