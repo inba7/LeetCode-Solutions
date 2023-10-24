@@ -2,6 +2,6 @@ class Solution(object):
     def heightChecker(self, heights):
         Sorted = sorted(heights)
         Count = 0
-        for Idx, Val in enumerate(heights):
-            if Val != Sorted[Idx]: Count += 1
+        for X in range(len(heights)):
+            if heights[X] != Sorted[X]: Count += 1
         return Count
