@@ -1,51 +1,26 @@
 class Solution:
     def isMatch(self, s, p):
-        i, j = len(s) - 1, len(p) - 1
-        return self.backtrack({}, s, p, i, j)
-
-    def backtrack(self, cache, s, p, i, j):
-        key = (i, j)
-        if key in cache:
-            return cache[key]
-
-        if i == -1 and j == -1:
-            cache[key] = True
-            return True
-
-        if i != -1 and j == -1:
-            cache[key] = False
-            return cache[key]
-
-        if i == -1 and p[j] == '*':
-            k = j
-            while k != -1 and p[k] == '*':
-                k -= 2
+        self.cache = {}
+        def isM(s,p):
+            if (s,p) in self.cache:
+                return self.cache[(s,p)]
             
-            if k == -1:
-                cache[key] = True
-                return cache[key]
+            if not p:
+                return not s
+
+            if p[-1] == "*" and isM(s,p[:-2]):
+                self.cache[(s,p)] = True
+                return True
+                
+            if p[-1] == "*" and s and (s[-1] == p[-2] or p[-2] == '.') and isM(s[:-1], p):
+                    self.cache[(s, p)] = True
+                    return True    
+
+            if s and (p[-1] == s[-1] or p[-1] == '.') and isM(s[:-1], p[:-1]):
+                self.cache[(s, p)] = True
+                return True
             
-            cache[key] = False
-            return cache[key]
+            self.cache[(s, p)] = False
+            return False
         
-        if i == -1 and p[j] != '*':
-            cache[key] = False
-            return cache[key]
-
-        if p[j] == '*':
-            if self.backtrack(cache, s, p, i, j - 2):
-                cache[key] = True
-                return cache[key]
-            
-            if p[j - 1] == s[i] or p[j - 1] == '.':
-                if self.backtrack(cache, s, p, i - 1, j):
-                    cache[key] = True
-                    return cache[key]
-        
-        if p[j] == '.' or s[i] == p[j]:
-            if self.backtrack(cache, s, p, i - 1, j - 1):
-                cache[key] = True
-                return cache[key]
-
-        cache[key] = False
-        return cache[key]
+        return isM(s,p)
