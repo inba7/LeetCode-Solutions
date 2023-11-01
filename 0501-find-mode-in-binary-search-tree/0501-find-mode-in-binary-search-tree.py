@@ -1,23 +1,25 @@
 class Solution(object):
     def findMode(self, root):
-        maxv = {'max':0}
-        hashmap = {}
-        def dfs(root, parent, freq):
-            if root == None:
-                return
-            if root.val not in hashmap:
-                hashmap[root.val] = 0
-            hashmap[root.val] += 1
-            if hashmap[root.val] > maxv['max']:
-                maxv['max'] = hashmap[root.val]
-            if root.left:
-                dfs(root.left, root.val, freq)
-            if root.right:
-                dfs(root.right, root.val, freq)
-
-        dfs(root, 0, 0)
+        def mode(root, m):
+            if not root: return
+            if root.val not in m:
+                m[root.val] = 0
+            m[root.val] += 1
+            mode(root.left, m)
+            mode(root.right, m)
+            return
+        m = {}
+        mode(root, m)
         res = []
-        for key,value in hashmap.items():
-            if value == maxv['max']:
-                res.append(key)
+        mx = float("-inf")
+        for k,v in m.items():
+            if v > mx:
+                res = [k]
+                mx = v
+            elif v == mx:
+                res.append(k)
         return res
+
+
+
+        
